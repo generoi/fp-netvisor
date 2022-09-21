@@ -12,6 +12,7 @@ use Xi\Netvisor\Resource\Xml\Component\Root;
 use JMS\Serializer\Serializer;
 use Xi\Netvisor\Filter\SalesInvoicesFilter;
 use Xi\Netvisor\Resource\Xml\Customer;
+use Xi\Netvisor\Resource\Xml\Product;
 use Xi\Netvisor\Resource\Xml\SalesInvoice;
 use Xi\Netvisor\Resource\Xml\PurchaseInvoice;
 use Xi\Netvisor\Resource\Xml\PurchaseInvoiceState;
@@ -117,6 +118,15 @@ class Netvisor
     public function sendPurchaseInvoice(PurchaseInvoice $invoice)
     {
         return $this->requestWithBody($invoice, 'purchaseinvoice');
+    }
+
+    /**
+     * @param  Product $product
+     * @return null|string
+     */
+    public function sendProduct(Product $product)
+    {
+        return $this->requestWithBody($product, 'product', ['method' => 'add']);
     }
 
     /**
@@ -241,7 +251,7 @@ class Netvisor
     {
         return $this->get(
             'salesinvoicelist',
-            $salesInvoicesFilter->getFilterArray() 
+            $salesInvoicesFilter->getFilterArray()
         );
     }
 
@@ -290,7 +300,7 @@ class Netvisor
     public function getVoucher($id, \DateTime $startDate, \DateTime $endDate)
     {
         $response = new \SimpleXMLElement($this->getVouchers($startDate, $endDate));
-        
+
         foreach ($response->Vouchers->children() as $voucher) {
             if ((int) $voucher->NetvisorKey === (int) $id) {
                 return $voucher->asXml();

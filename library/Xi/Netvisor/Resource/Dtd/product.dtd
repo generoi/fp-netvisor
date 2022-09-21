@@ -1,0 +1,55 @@
+<!DOCTYPE root [
+<!ELEMENT root (product)>
+<!ELEMENT product (productbaseinformation, productbookkeepingdetails?, productadditionalinformation?, productcustomtags?)>
+<!ELEMENT productbaseinformation (productcode?, productgroup, name, description?, unitprice, unit?, unitweight?, purchaseprice?, tariffheading?, comissionpercentage?, isactive, issalesproduct, inventoryenabled?, inventorybatchlinkingmode?, countryoforigin?, primaryeancode?, secondaryeancode?, inventoryalertlimit?)>
+<!ELEMENT productbookkeepingdetails (defaultvatpercentage, defaultdomesticaccountnumber?, defaulteuaccountnumber?, defaultoutsideeuaccountnumber?)>
+<!ELEMENT productadditionalinformation (productnetweight?, productgrossweight?, productweightunit?, productpackageinformation?, dimension*)>
+<!ELEMENT productpackageinformation (packagewidth, packageheight, packagelength)>
+<!ELEMENT productcustomtags (productcustomtag*)>
+
+<!ELEMENT productcode (#PCDATA)>
+<!ELEMENT productgroup (#PCDATA)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT description (#PCDATA)>
+<!ELEMENT unitprice (#PCDATA)>
+	<!ATTLIST unitprice type (net|gross) #REQUIRED>
+<!ELEMENT unit (#PCDATA)>
+<!ELEMENT unitweight (#PCDATA)>
+<!ELEMENT purchaseprice (#PCDATA)>
+<!ELEMENT tariffheading (#PCDATA)>
+<!ELEMENT comissionpercentage (#PCDATA)>
+<!ELEMENT isactive (#PCDATA)>
+<!ELEMENT issalesproduct (#PCDATA)>
+<!ELEMENT inventoryenabled (#PCDATA)>
+<!ELEMENT inventorybatchlinkingmode (#PCDATA)>
+<!ELEMENT countryoforigin (#PCDATA)>
+  <!ATTLIST countryoforigin type CDATA "ISO-3166">
+<!ELEMENT primaryeancode (#PCDATA)>
+  <!ATTLIST primaryeancode type (any|ean8|ean13|code128) #IMPLIED>
+<!ELEMENT secondaryeancode (#PCDATA)>
+  <!ATTLIST secondaryeancode type (any|ean8|ean13|code128) #IMPLIED>
+<!ELEMENT inventoryalertlimit (#PCDATA)>
+
+<!ELEMENT defaultvatpercentage (#PCDATA)>
+<!ELEMENT defaultdomesticaccountnumber (#PCDATA)>
+<!ELEMENT defaulteuaccountnumber (#PCDATA)>
+<!ELEMENT defaultoutsideeuaccountnumber (#PCDATA)>
+
+<!ELEMENT productnetweight (#PCDATA)>
+<!ELEMENT productgrossweight (#PCDATA)>
+<!ELEMENT productweightunit (#PCDATA)>
+
+<!ELEMENT packagewidth (#PCDATA)>
+<!ELEMENT packageheight (#PCDATA)>
+<!ELEMENT packagelength (#PCDATA)>
+
+<!ELEMENT dimension (dimensionname, dimensionitem)>
+<!ELEMENT dimensionname (#PCDATA)>
+<!ELEMENT dimensionitem (#PCDATA)>
+<!ATTLIST dimensionitem fatherid CDATA #IMPLIED>
+
+<!ELEMENT productcustomtag (tagname, tagvalue)>
+<!ELEMENT tagname (#PCDATA)>
+<!ELEMENT tagvalue (#PCDATA)>
+<!ATTLIST tagvalue datatype (date|text|decimal|enum) #REQUIRED>
+]>
