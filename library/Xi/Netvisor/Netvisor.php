@@ -229,14 +229,16 @@ class Netvisor
      * Get details for a invoice identified by Netvisor id.
      *
      * @param int $id
+     * @param string $pdfimage
      * @return null|string
      */
-    public function getSalesInvoice($id)
+    public function getSalesInvoice($id, $pdfimage = 'lastsentprintservice')
     {
         return $this->get(
             'getsalesinvoice',
             [
                 'netvisorkey' => $id,
+                'pdfimage' => $pdfimage
             ]
         );
     }
