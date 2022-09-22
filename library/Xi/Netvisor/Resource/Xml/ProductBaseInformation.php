@@ -55,6 +55,12 @@ class ProductBaseInformation
         );
     }
 
+    public function setUnitPriceType(string $type): self
+    {
+        $this->unitPrice->setAttribute('type', $type);
+        return $this;
+    }
+
     public function setProductCode(string $productCode): self
     {
         $this->productCode = $productCode;
