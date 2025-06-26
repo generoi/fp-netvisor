@@ -68,6 +68,22 @@ class CustomerTest extends XmlTestCase
         $this->assertXmlContainsTagWithValue('email', $email, $xml);
     }
 
+    public function testSetEmailInvoicingAddress()
+    {
+        $email = 'asdf@asdf.fi';
+        $this->baseInformation->setEmailInvoicingAddress($email);
+        $xml = $this->toXml($this->customer->getSerializableObject());
+        $this->assertXmlContainsTagWithValue('emailinvoicingaddress', $email, $xml);
+    }
+
+    public function testSetEmailInvoicingAddressWithInvalidEmailAddress()
+    {
+        $email = 'asdfasdf.fi';
+        $this->baseInformation->setEmailInvoicingAddress($email);
+        $xml = $this->toXml($this->customer->getSerializableObject());
+        $this->assertXmlDoesNotContainTag('emailinvoicingaddress', $email, $xml);
+    }
+
     /**
      * @dataProvider businessIdProvider
      */

@@ -13,6 +13,7 @@ class CustomerBaseInformation
     private $phonenumber;
     private $email;
     private $isprivatecustomer = 1;
+    private $emailinvoicingaddress;
 
     /**
      * @param string $name
@@ -52,6 +53,23 @@ class CustomerBaseInformation
     public function setEmail($email)
     {
         $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * @param string $email
+     * @return self
+     */
+    public function setEmailInvoicingAddress($email)
+    {
+        /**
+         * Sets the email invoicing address if the given email is valid.
+         * Netvisor API rejects invalid email addresses, so they are ignored.
+         */
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $this->emailinvoicingaddress = $email;
+        }
+
         return $this;
     }
 
