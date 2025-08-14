@@ -4,6 +4,7 @@ namespace Xi\Netvisor\Resource\Xml;
 
 use JMS\Serializer\Annotation\XmlList;
 use Xi\Netvisor\Resource\Xml\Component\AttributeElement;
+use Xi\Netvisor\Support\Str;
 
 class PurchaseInvoiceLine
 {
@@ -33,7 +34,7 @@ class PurchaseInvoiceLine
         $vatPercent,
         $lineSum
     ) {
-        $this->productname = substr($productName, 0, 200);
+        $this->productname = Str::utf8_substr($productName, 0, 200);
         $this->deliveredamount = $deliveredAmount;
         $this->unitprice = $unitPrice;
         $this->vatpercent = $vatPercent;

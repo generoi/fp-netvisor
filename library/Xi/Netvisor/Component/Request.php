@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use Xi\Netvisor\Exception\NetvisorException;
 use Xi\Netvisor\Config;
+use Xi\Netvisor\Support\Str;
 
 class Request
 {
@@ -174,6 +175,6 @@ class Request
         $timestamp = \DateTime::createFromFormat('U.u', microtime(true));
         $timestamp->setTimezone(new \DateTimeZone('GMT'));
 
-        return substr($timestamp->format('Y-m-d H:i:s.u'), 0, -3);
+        return Str::utf8_substr($timestamp->format('Y-m-d H:i:s.u'), 0, -3);
     }
 }

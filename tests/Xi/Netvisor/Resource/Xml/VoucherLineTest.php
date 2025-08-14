@@ -4,6 +4,7 @@ namespace Xi\Netvisor\Resource\Xml;
 
 use Xi\Netvisor\Resource\Xml\VoucherLine;
 use Xi\Netvisor\XmlTestCase;
+use Xi\Netvisor\Support\Str;
 
 class VoucherLineTest extends XmlTestCase
 {
@@ -139,7 +140,7 @@ class VoucherLineTest extends XmlTestCase
         $this->voucherLine->setDescription($description);
         $xml = $this->toXml($this->voucherLine);
 
-        $this->assertXmlContainsTagWithValue('description', substr($description, 0, 255), $xml);
+        $this->assertXmlContainsTagWithValue('description', Str::utf8_substr($description, 0, 255), $xml);
         $this->assertNotContains($description, $xml);
     }
 }

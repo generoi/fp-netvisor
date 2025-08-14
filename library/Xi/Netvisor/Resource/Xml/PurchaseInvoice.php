@@ -5,6 +5,7 @@ namespace Xi\Netvisor\Resource\Xml;
 use JMS\Serializer\Annotation\XmlList;
 use Xi\Netvisor\Resource\Xml\Component\Root;
 use Xi\Netvisor\Resource\Xml\Component\AttributeElement;
+use Xi\Netvisor\Support\Str;
 
 class PurchaseInvoice extends Root
 {
@@ -120,13 +121,13 @@ class PurchaseInvoice extends Root
     ) {
         $this->accountnumber = $bankAccount ?: null;
         $this->organizationidentifier = $businessId ?: null;
-        $this->vendorname = $name ? substr($name, 0, 250) : null;
-        $this->vendoraddressline = $streetAddress ? substr($streetAddress, 0, 80) : null;
-        $this->vendorpostnumber = $postNumber ? substr($postNumber, 0, 50) : null;
-        $this->vendorcity = $city ? substr($city, 0, 50) : null;
-        $this->vendorcountry = $countryCode ? substr($countryCode, 0, 2) : null;
-        $this->vendorphonenumber = $phone ? substr($phone, 0, 80) : null;
-        $this->vendoremail = $email ? substr($email, 0, 80) : null;
+        $this->vendorname = $name ? Str::utf8_substr($name, 0, 250) : null;
+        $this->vendoraddressline = $streetAddress ? Str::utf8_substr($streetAddress, 0, 80) : null;
+        $this->vendorpostnumber = $postNumber ? Str::utf8_substr($postNumber, 0, 50) : null;
+        $this->vendorcity = $city ? Str::utf8_substr($city, 0, 50) : null;
+        $this->vendorcountry = $countryCode ? Str::utf8_substr($countryCode, 0, 2) : null;
+        $this->vendorphonenumber = $phone ? Str::utf8_substr($phone, 0, 80) : null;
+        $this->vendoremail = $email ? Str::utf8_substr($email, 0, 80) : null;
 
         return $this;
     }
@@ -147,7 +148,7 @@ class PurchaseInvoice extends Root
      */
     public function setComment($comment)
     {
-        $this->comment = substr($comment, 0, 255);
+        $this->comment = Str::utf8_substr($comment, 0, 255);
         return $this;
     }
 

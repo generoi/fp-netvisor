@@ -6,6 +6,7 @@ use JMS\Serializer\Annotation\XmlList;
 use Xi\Netvisor\Resource\Xml\Component\Root;
 use Xi\Netvisor\Resource\Xml\Component\AttributeElement;
 use Xi\Netvisor\Resource\Xml\Component\WrapperElement;
+use Xi\Netvisor\Support\Str;
 
 /**
  * TODO: Should be kept immutable?
@@ -133,7 +134,7 @@ class SalesInvoice extends Root
      */
     public function setAfterLinesText($text)
     {
-        $this->salesinvoicefreetextafterlines = substr($text, 0, 500);
+        $this->salesinvoicefreetextafterlines = Str::utf8_substr($text, 0, 500);
         return $this;
     }
 
@@ -143,7 +144,7 @@ class SalesInvoice extends Root
      */
     public function setBeforeLinesText($text)
     {
-        $this->salesinvoicefreetextbeforelines = substr($text, 0, 500);
+        $this->salesinvoicefreetextbeforelines = Str::utf8_substr($text, 0, 500);
         return $this;
     }
 

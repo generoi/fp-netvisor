@@ -4,6 +4,7 @@ namespace Xi\Netvisor\Resource\Xml;
 
 use JMS\Serializer\Annotation\XmlList;
 use Xi\Netvisor\Resource\Xml\Component\AttributeElement;
+use Xi\Netvisor\Support\Str;
 
 class SalesInvoiceProductLine
 {
@@ -47,7 +48,7 @@ class SalesInvoiceProductLine
             array('type' => self::PRODUCT_IDENTIFIER_TYPE_NETVISOR)
         );
 
-        $this->productName = substr($productName, 0, 200);
+        $this->productName = Str::utf8_substr($productName, 0, 200);
 
         $this->productUnitPrice = new AttributeElement(
             $productUnitPrice, array('type' => self::UNIT_PRICE_TYPE_WITHOUT_VAT)
