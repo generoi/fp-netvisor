@@ -4,6 +4,7 @@ namespace Xi\Netvisor\Resource\Xml;
 
 use Xi\Netvisor\Resource\Xml\SalesInvoice;
 use Xi\Netvisor\XmlTestCase;
+use Xi\Netvisor\Support\Str;
 
 class SalesInvoiceTest extends XmlTestCase
 {
@@ -151,7 +152,7 @@ class SalesInvoiceTest extends XmlTestCase
         $this->invoice->setBeforeLinesText($text);
         $xml = $this->toXml($this->invoice->getSerializableObject());
 
-        $this->assertXmlContainsTagWithValue('salesinvoicefreetextbeforelines', substr($text, 0, 500), $xml);
+        $this->assertXmlContainsTagWithValue('salesinvoicefreetextbeforelines', Str::utf8_substr($text, 0, 500), $xml);
         $this->assertNotContains($text, $xml);
     }
 
@@ -171,7 +172,7 @@ class SalesInvoiceTest extends XmlTestCase
         $this->invoice->setAfterLinesText($text);
         $xml = $this->toXml($this->invoice->getSerializableObject());
 
-        $this->assertXmlContainsTagWithValue('salesinvoicefreetextafterlines', substr($text, 0, 500), $xml);
+        $this->assertXmlContainsTagWithValue('salesinvoicefreetextafterlines', Str::utf8_substr($text, 0, 500), $xml);
         $this->assertNotContains($text, $xml);
     }
 

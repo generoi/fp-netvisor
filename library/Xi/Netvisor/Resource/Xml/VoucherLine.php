@@ -4,6 +4,7 @@ namespace Xi\Netvisor\Resource\Xml;
 
 use JMS\Serializer\Annotation\XmlList;
 use Xi\Netvisor\Resource\Xml\Component\AttributeElement;
+use Xi\Netvisor\Support\Str;
 
 class VoucherLine
 {
@@ -66,7 +67,7 @@ class VoucherLine
      */
     public function setDescription($description)
     {
-        $this->description = substr($description, 0, 255);
+        $this->description = Str::utf8_substr($description, 0, 255);
         return $this;
     }
 }

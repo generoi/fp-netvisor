@@ -4,6 +4,7 @@ namespace Xi\Netvisor\Resource\Xml;
 
 use Xi\Netvisor\Resource\Xml\PurchaseInvoice;
 use Xi\Netvisor\XmlTestCase;
+use Xi\Netvisor\Support\Str;
 
 class PurchaseInvoiceTest extends XmlTestCase
 {
@@ -130,7 +131,7 @@ class PurchaseInvoiceTest extends XmlTestCase
         $this->invoice->setComment($comment);
         $xml = $this->toXml($this->invoice->getSerializableObject());
 
-        $this->assertXmlContainsTagWithValue('comment', substr($comment, 0, 255), $xml);
+        $this->assertXmlContainsTagWithValue('comment', Str::utf8_substr($comment, 0, 255), $xml);
         $this->assertNotContains($comment, $xml);
     }
 
@@ -208,7 +209,7 @@ class PurchaseInvoiceTest extends XmlTestCase
             }
 
             $value = !is_null($data['maxlength']) ?
-                substr($data['value'], 0, $data['maxlength']) :
+                Str::utf8_substr($data['value'], 0, $data['maxlength']) :
                 $data['value'];
 
             $this->assertXmlContainsTagWithValue($key, $value, $xml);

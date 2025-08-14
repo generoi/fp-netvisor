@@ -20,6 +20,7 @@
 
     "require": {
         "php": ">=7.2",
+        "ext-mbstring": "*",
         "jms/serializer": "^3.11",
         "doctrine/annotations": "^1.0",
         "guzzlehttp/guzzle": "^7.2"

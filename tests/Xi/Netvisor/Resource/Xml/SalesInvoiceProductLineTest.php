@@ -4,6 +4,7 @@ namespace Xi\Netvisor\Resource\Xml;
 
 use Xi\Netvisor\Resource\Xml\SalesInvoiceProductLine;
 use Xi\Netvisor\XmlTestCase;
+use Xi\Netvisor\Support\Str;
 
 class SalesInvoiceProductLineTest extends XmlTestCase
 {
@@ -36,7 +37,7 @@ class SalesInvoiceProductLineTest extends XmlTestCase
         $this->assertXmlContainsTagWithValue('productidentifier', '100', $xml);
         $this->assertXmlContainsTagWithAttributes('productidentifier', array('type' => 'netvisor'), $xml);
 
-        $this->assertXmlContainsTagWithValue('productname', substr(static::LONG_PRODUCT_NAmE, 0, 200), $xml);
+        $this->assertXmlContainsTagWithValue('productname', Str::utf8_substr(static::LONG_PRODUCT_NAmE, 0, 200), $xml);
         $this->assertNotContains(static::LONG_PRODUCT_NAmE, $xml);
 
         $this->assertXmlContainsTagWithValue('productunitprice', '1,23', $xml);
