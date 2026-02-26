@@ -108,16 +108,20 @@ class Request
     {
         $authenticationTransactionId = $this->getAuthenticationTransactionId();
         $authenticationTimestamp     = $this->getAuthenticationTimestamp();
+        $authenticationTimestampUnix = (string) time();
 
         return array(
-            'X-Netvisor-Authentication-Sender'        => $this->config->getSender(),
-            'X-Netvisor-Authentication-CustomerId'    => $this->config->getCustomerId(),
-            'X-Netvisor-Authentication-PartnerId'     => $this->config->getPartnerId(),
-            'X-Netvisor-Authentication-Timestamp'     => $authenticationTimestamp,
-            'X-Netvisor-Interface-Language'           => $this->config->getLanguage(),
-            'X-Netvisor-Organisation-ID'              => $this->config->getOrganizationId(),
-            'X-Netvisor-Authentication-TransactionId' => $authenticationTransactionId,
-            'X-Netvisor-Authentication-MAC'           => $this->getAuthenticationMac($url, $authenticationTimestamp, $authenticationTransactionId)
+            'X-Netvisor-Authentication-Sender'                      => $this->config->getSender(),
+            'X-Netvisor-Authentication-CustomerId'                  => $this->config->getCustomerId(),
+            'X-Netvisor-Authentication-PartnerId'                   => $this->config->getPartnerId(),
+            'X-Netvisor-Authentication-Timestamp'                   => $authenticationTimestamp,
+            'X-Netvisor-Authentication-TimestampUnix'                => $authenticationTimestampUnix,
+            'X-Netvisor-Authentication-TransactionId'               => $authenticationTransactionId,
+            'X-Netvisor-Authentication-MACHashCalculationAlgorithm' => 'HMACSHA256',
+            'X-Netvisor-Authentication-UseHTTPResponseStatusCodes'  => '1',
+            'X-Netvisor-Interface-Language'                         => $this->config->getLanguage(),
+            'X-Netvisor-Organisation-ID'                            => $this->config->getOrganizationId(),
+            'X-Netvisor-Authentication-MAC'                         => $this->getAuthenticationMac($url, $authenticationTimestamp, $authenticationTransactionId, $authenticationTimestampUnix),
         );
     }
 
@@ -131,16 +135,17 @@ class Request
     }
 
     /**
-     * Calculates MAC MD5-hash for headers.
+     * Calculates MAC HMAC-SHA256 hash for headers.
      *
      * @param  string $url
      * @param  string $authenticationTimestamp
      * @param  string $authenticationTransactionId
+     * @param  string $authenticationTimestampUnix
      * @return string
      */
-    private function getAuthenticationMac($url, $authenticationTimestamp, $authenticationTransactionId)
+    private function getAuthenticationMac($url, $authenticationTimestamp, $authenticationTransactionId, $authenticationTimestampUnix)
     {
-        $parameters = array(
+        $data = implode('&', array(
             $url,
             $this->config->getSender(),
             $this->config->getCustomerId(),
@@ -148,11 +153,14 @@ class Request
             $this->config->getLanguage(),
             $this->config->getOrganizationId(),
             $authenticationTransactionId,
+            $authenticationTimestampUnix,
             $this->config->getUserKey(),
             $this->config->getPartnerKey(),
-        );
+        ));
 
-        return md5(implode('&', $parameters));
+        $key = $this->config->getUserKey() . '&' . $this->config->getPartnerKey();
+
+        return hash_hmac('sha256', $data, $key);
     }
 
     /**
